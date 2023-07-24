@@ -1,0 +1,38 @@
+{
+  "name": "tsx-to",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/dom.cjs",
+  "types": "dist/types/dom/index.d.ts",
+  "exports": {
+    "./dom": {
+      "require": "./dist/dom.cjs",
+      "import": "./dist/dom.mjs",
+      "types": "./dist/types/dom/index.d.ts"
+    },
+    "./html": {
+      "require": "./dist/html.cjs",
+      "import": "./dist/html.mjs",
+      "types": "./dist/types/html/index.d.ts"
+    }
+  },
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "node build.mjs && tsc --declaration --emitDeclarationOnly --declarationDir './dist/types'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/cyokodog/tsx-to.git"
+  },
+  "keywords": [],
+  "author": "cyokodog <cyokodog@gmail.com> (https://www.cyokodog.net/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cyokodog/tsx-to/issues"
+  },
+  "homepage": "https://github.com/cyokodog/tsx-to#readme",
+  "devDependencies": {
+    "esbuild": "^0.18.15",
+    "typescript": "^5.1.6"
+  }
+}
