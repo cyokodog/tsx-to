@@ -5,6 +5,9 @@
   "main": "dist/dom.cjs",
   "types": "dist/types/dom/index.d.ts",
   "exports": {
+    "./jsx": {
+      "types": "./jsx.d.ts"
+    },
     "./dom": {
       "require": "./dist/dom.cjs",
       "import": "./dist/dom.mjs",

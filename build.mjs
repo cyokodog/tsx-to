@@ -3,6 +3,9 @@ import { build } from 'esbuild';
 const baseSettings = {
   entryPoints: {
     dom: './src/dom/index.ts',
+    domReplacer: './src/dom/utils/domReplacer/index.ts',
+    useReactive: './src/dom/uses/useReactive/index.ts',
+    Reactivate: './src/dom/components/Reactivate/index.tsx',
     html: './src/html/index.ts',
   },
   logLevel: 'info',
