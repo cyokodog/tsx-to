@@ -1,5 +1,25 @@
-import type { Attribute, Children, ElementName } from './types';
+import type { Attribute, Children, Child, ElementName } from './types';
 import { booleanAttrs } from './constants';
+
+const appendChildren = (
+  target: DocumentFragment | HTMLElement,
+  children: Children
+) => {
+  const append = (child: Child) =>
+    child === null ||
+    child === undefined ||
+    typeof child === 'boolean' ||
+    target.append(child);
+  children.forEach((child) =>
+    Array.isArray(child) ? child.forEach(append) : append(child)
+  );
+};
+
+export const Fragment = (_: Attribute, children: Children) => {
+  const fragment = document.createDocumentFragment();
+  appendChildren(fragment, children);
+  return fragment;
+};
 
 export const tsxToDom = (
   elementName: ElementName,
@@ -20,7 +40,7 @@ export const tsxToDom = (
       el.setAttribute(key, attributes[key]);
     }
   }
-  el.append(...children);
+  appendChildren(el, children);
   return el;
 };
 

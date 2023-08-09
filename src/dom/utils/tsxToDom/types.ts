@@ -4,4 +4,5 @@ export type ElementName =
 
 export type Attribute = { [key: string]: any };
 
-export type Children = Array<HTMLElement>;
+export type Child = HTMLElement | boolean | null | undefined;
+export type Children = Array<Child | Array<Child>>;
