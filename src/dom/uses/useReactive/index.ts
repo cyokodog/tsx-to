@@ -1,6 +1,4 @@
-import { type FocusHandler } from '../../utils/domReplacer/getFocusHandler';
-
-export type Render = () => { focus?: FocusHandler } | void;
+import type { Render } from '../..';
 
 export type Reactive<T extends object> = ReturnType<typeof useReactive<T>>;
 

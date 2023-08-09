@@ -1,5 +1,5 @@
+import { booleanAttrs } from '../../../shared/constants';
 import type { Attribute, Children, Child, ElementName } from './types';
-import { booleanAttrs } from './constants';
 
 const appendChildren = (
   target: DocumentFragment | HTMLElement,
