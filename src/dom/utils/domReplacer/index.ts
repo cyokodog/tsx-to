@@ -1,31 +1,40 @@
-import { getFocusHandler } from './getFocusHandler';
+import { getFocusHandler, type FocusHandler } from './getFocusHandler';
+
+export type DomReplacer = ReturnType<typeof domReplacer>;
+
+export type Render = () => { focus: FocusHandler };
+
+export interface DomFactoryParams {
+  replaceDom: () => HTMLElement;
+  render: Render;
+}
 
 export const domReplacer = (
-  domFactory: () => HTMLElement,
+  domFactory: (p: DomFactoryParams) => HTMLElement,
   targetDom?: Element | null
 ) => {
-  let dom = domFactory();
+  let dom = domFactory({ replaceDom, render });
   if (targetDom) targetDom.replaceWith(dom);
 
-  const replaceDom = () => {
-    const newDom = domFactory();
+  function replaceDom() {
+    const newDom = domFactory({ replaceDom, render });
     dom.replaceWith(newDom);
     return (dom = newDom);
-  };
+  }
+
+  function render() {
+    const id = document.activeElement?.id;
+    const selectionStart = (document.activeElement as any)?.selectionStart;
+    const newDom = replaceDom();
+    const focus = getFocusHandler(newDom);
+    if (id && focus) {
+      focus('#' + id, selectionStart);
+    }
+    return { focus: getFocusHandler(newDom) };
+  }
 
   return {
-    render() {
-      const id = document.activeElement?.id;
-      const selectionStart = (document.activeElement as any)?.selectionStart;
-
-      const newDom = replaceDom();
-
-      const focus = getFocusHandler(newDom);
-      if (id && focus) {
-        focus('#' + id, selectionStart);
-      }
-      return { focus: getFocusHandler(newDom) };
-    },
+    render,
     replaceDom,
     dom,
   };
